@@ -1,9 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -13,13 +7,14 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-
 model Folder {
-  id Int @id @default(autoincrement())
-  parentId Int?
-  parentFolder Folder? @relation("folderHierarchy", fields: [parentId], references: [id])
-  childrenFolders Folder[] @relation("folderHierarchy")
-  name String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @default(now())
+  id              Int      @id @default(autoincrement())
+  parentId        Int?
+  name            String
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @default(now())
+  parentFolder    Folder?  @relation("folderRelation", fields: [parentId], references: [id])
+  childrenFolders Folder[] @relation("folderRelation")
+
+  @@map("folder")
 }
