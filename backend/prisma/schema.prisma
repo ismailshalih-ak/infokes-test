@@ -16,8 +16,8 @@ datasource db {
 
 model Folder {
   id Int @id @default(autoincrement())
-  parentId Int
-  parentFolder Folder @relation("folderHierarchy", fields: [parentId], references: [id])
+  parentId Int?
+  parentFolder Folder? @relation("folderHierarchy", fields: [parentId], references: [id])
   childrenFolders Folder[] @relation("folderHierarchy")
   name String
   createdAt DateTime @default(now())
